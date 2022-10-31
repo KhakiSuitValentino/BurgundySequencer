@@ -3,9 +3,13 @@ from tkinter import W
 import pygame
 import os
 import math
+from pygame import mixer
+
+# from parser import sequence2st
 
 #Configuration:
 pygame.init()
+pygame.mixer.init()
 pygame.display.set_caption("BURGUNDY SEQUENCER")
 pygame.mouse.set_visible(1)
 WIDTH, HEIGHT = 922, 692
@@ -21,11 +25,25 @@ BACKGROUND_IMG = pygame.image.load(os.path.join('assets', 'layout.png'))
 BUTTON = pygame.image.load(os.path.join('assets', "button.png"))
 HITBOX = pygame.image.load(os.path.join('assets', "hitbox.png"))
 
-# objects = []
 
-# def objects_test():
-#      if objects != []:
-#           print('objects array populated')
+# Audio
+kick = 'assets/audio/kick.wav'
+chord1 = 'assets/audio/chord1.wav'
+
+# pygame.mixer.Channel(0).play(pygame.mixer.Sound(kick))
+
+
+
+# Events
+next_sequence_event = pygame.USEREVENT + 1
+pygame.time.set_timer(next_sequence_event, 500)
+
+
+
+# Sequences
+sequence1 = []
+
+
 
 
 # Functions:
@@ -45,7 +63,7 @@ HITBOX = pygame.image.load(os.path.join('assets', "hitbox.png"))
 
 #Classes
 class Button():
-     def __init__(self, x, y, width, height, onClickFunction=None, onePress=False, isOn = False, color = '#EF0096'):
+     def __init__(self, x, y, width, height, timing=0, onClickFunction=None, onePress=False, isOn = False, color = '#EF0096'):
           self.x = x
           self.y = y
           self.width = width
@@ -56,6 +74,7 @@ class Button():
           self.isOn = isOn
           self.pressed = False
           self.color = color 
+          self.timing = timing
 
           self.pos = (self.x, self.y)
 
@@ -64,8 +83,6 @@ class Button():
           self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
 
           self.alreadyPressed = False
-
-          # object.append(self)
 
 
      def draw(self):
@@ -86,6 +103,7 @@ class Button():
                else:
                     if self.pressed == True:
                          if self.color == '#EF0096':
+                              sequence1.append(self)
                               self.color = '#ffffff'
                               self.pressed = False
                          else:
@@ -147,12 +165,25 @@ x = 295
 y = 45
 buttons = []
 totalNumOfBtns = 225
+timing = 0
 for i in range(1,totalNumOfBtns):
-     buttons.append(Button(x, y, 41,41))
+     buttons.append(Button(x, y, 41,41, timing))
      x+=35
+     timing+=500 
      if(i % 16 == 0 and i != 0):
+          timing = 0
           x = 295
           y += 40
+
+
+playButtons = []
+x = 295
+y = 605
+timing = 0
+for i in range(16):
+     playButtons.append(Button(x,y,41,41, timing, False, False, False, '#1C0020'))
+     x+= 35
+     timing+= 500
 
 
 
@@ -195,11 +226,20 @@ def draw_window():
 
      for i in range(224):
           buttons[i].draw()
-     # kick1Btn.draw()
-     # kick2Btn.draw()
-     # kick3Btn.draw()
-     # kick4Btn.draw()
-     # kick5Btn.draw()
+
+     for i in range(16):
+          playButtons[i].draw()
+          
+
+     sequence = {
+          1: sequence1,
+     }
+
+     # for i in range(len(sequence[1])):
+     #      pygame.mixer.Channel(i).play(pygame.mixer.Sound(kick))
+     #      pygame.mixer.Channel(i).play(pygame.mixer.Sound(chord1))
+
+
 
 
      # WIN.blit(BUTTON, (347, 64))
@@ -220,11 +260,35 @@ def main():
      run = True
      clock = pygame.time.Clock()
 
+     playButtonIndex = 0
+
      while run:
                
 
           clock.tick(FPS)
           for event in pygame.event.get():
+               draw_window()
+
+               if event.type == pygame.QUIT:
+                    run = False
+               elif event.type == next_sequence_event:
+                    if(playButtonIndex == 15):
+                         playButtons[playButtonIndex].color = '#FFAFAF'
+                         playButtons[14].color = '#1C0020'
+
+                         playButtonIndex = 0
+                         break
+                    else:
+                         if (playButtonIndex == 0):
+                              playButtons[playButtonIndex].color = '#FFAFAF'
+                              playButtons[15].color = '#1C0020'
+
+                         else:
+                              playButtons[playButtonIndex].color = '#FFAFAF'
+                              playButtons[playButtonIndex-1].color = '#1C0020'
+
+                         playButtonIndex+=1
+
 
 
                # #mouse click on button:
@@ -244,13 +308,11 @@ def main():
                     
 
                #to quit game:
-               if event.type == pygame.QUIT:
-                    run = False
+              
 
           # for object in objects:
           #      object.process()
 
-          draw_window()
 
 
      pygame.quit()
