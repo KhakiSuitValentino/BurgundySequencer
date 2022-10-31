@@ -52,7 +52,6 @@ pygame.time.set_timer(next_sequence_event, 150)
 isPlaying = False
 
 
-
 # Sequences
 sequence1 = []
 
@@ -662,7 +661,7 @@ def main():
 
 
                     # Play Button Hughlighting Logic
-                    if(sequenceCounter == 16):
+                    if(sequenceCounter == 15):
                          playButtons[15].color = '#FFAFAF'
                          playButtons[14].color = '#1C0020'
 
