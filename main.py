@@ -48,30 +48,13 @@ pygame.mixer.set_num_channels(20)
 
 # Events
 next_sequence_event = pygame.USEREVENT + 1
-pygame.time.set_timer(next_sequence_event, 500)
+pygame.time.set_timer(next_sequence_event, 150)
+isPlaying = False
 
 
 
 # Sequences
 sequence1 = []
-
-
-
-
-# Functions:
-
-# def lightswitch(self,button_name):
-# global kick1_isOn
-# global kick2_isOn     
-
-# print(button_name)
-
-# match button_name:
-#      case 'kick1':
-#           WIN.blit(BUTTON, (312, 24))
-          
-#      case 'kick2':
-#           WIN.blit(BUTTON, (312, 24))
 
 #Classes
 class Button():
@@ -82,7 +65,6 @@ class Button():
           self.height = height
           self.onClickFunction = onClickFunction
           self.onePress = onePress
-          # self.button_name = button_name
           self.isOn = isOn
           self.pressed = False
           self.color = color 
@@ -122,56 +104,7 @@ class Button():
                               self.pressed = False
 
 
-          # if self.buttonRect.collidepoint(mousePos):
-          #      if pygame.mouse.get_pressed()[0]:
-          #           self.pressed = True
-          #      else:
-          #           if self.pressed == True:
-          #                if self.color == '#EF0096':
-          #                     self.color = '#ffffff'
-          #                     self.pressed = False
-          #                else:
-          #                     self.color = '#EF0096'
-          #                     self.pressed = False
-
-
-                         
-
-
-
-
-          # mousePos = pygame.mouse.get_pos()
-          # # self.buttonSurface.blit(HITBOX, (0, 0))
-          # self.buttonSurface.set_alpha(0)
-          # if self.buttonRect.collidepoint(mousePos):
-          #      if pygame.mouse.get_pressed()[0]:
-          #           self.pressed = True
-          #      else:
-          #           if self.pressed == True:
-          #                print('lit')
-          #                self.pressed = False
-          #           # if self.onePress:
-          #           #      self.onClickFunction(self, self.button_name)
-
-          #           # elif not self.alreadyPressed:
-          #           #      self.onClickFunction()
-          #           #      self.alreadyPressed = True
-
-          #           # else:
-          #           #      self.alreadyPressed = False
-
-          #           WIN.blit(self.buttonSurface, self.buttonRect)
-
-
-
-# def myFunction():
-#      print('myFunction Button Pressed')
-
-
-
-
 # Buttons
-# kick1Btn = Button(277, 24, 41, 41)
 x = 295
 y = 45
 buttons = []
@@ -198,38 +131,6 @@ for i in range(16):
 
 
 
-
-# kick1Btn = Button(295, 45, 41, 41)
-# kick2Btn = Button(334, 45, 41, 41)
-# kick3Btn = Button(368, 45, 41, 41)
-# kick4Btn = Button(402, 45, 41, 41)
-# kick5Btn = Button(436, 45, 41, 41)
-# kick6Btn = Button(472, 45, 41, 41)
-# kick57tn = Button(508, 45, 41, 41)
-
-
-
-
-# kick4Btn = Button(295, 45, 41, 41)
-# kick5Btn = Button(295, 45, 41, 41)
-# kick6Btn = Button(295, 45, 41, 41)
-# kick7Btn = Button(295, 45, 41, 41)
-# kick8Btn = Button(295, 45, 41, 41)
-# kick9Btn = Button(295, 45, 41, 41)
-# kick10Btn = Button(295, 45, 41, 41)
-# kick11Btn = Button(295, 45, 41, 41)
-# kick12Btn = Button(295, 45, 41, 41)
-# kick13Btn = Button(295, 45, 41, 41)
-# kick14Btn = Button(295, 45, 41, 41)
-# kick15Btn = Button(295, 45, 41, 41)
-# kick16Btn = Button(295, 45, 41, 41)
-
-
-
-
-
-
-
 # Runs inside game loop
 def draw_window():
      pygame.display.update()
@@ -246,33 +147,16 @@ def draw_window():
           1: sequence1,
      }
 
-     # for i in range(len(sequence[1])):
-     #      pygame.mixer.Channel(i).play(pygame.mixer.Sound(kick))
-     #      pygame.mixer.Channel(i).play(pygame.mixer.Sound(chord1))
-
-
-
-
-     # WIN.blit(BUTTON, (347, 64))
-     # WIN.blit(HITBOX, (277, 64))
-
-     # kick1 = Button('kick1', 277, 24, 41, 41, lightswitch, myFunction)
-     # kick2 = Button('kick2', 312, 24, 41, 41, lightswitch, myFunction)
-
 
 #THE GAME LOOP:
 def main():
-
-     # kick1 = WIN.blit(HITBOX, (277, 24)) 
-     # kick1_on = False
-
-     
 
      run = True
      clock = pygame.time.Clock()
 
      playButtonIndex = 0
      sequenceCounter = 0
+     isPlaying = False
 
      btnindex = 0
 
@@ -285,13 +169,17 @@ def main():
 
                if event.type == pygame.QUIT:
                     run = False
-               elif event.type == next_sequence_event:
+
+               elif event.type == pygame.KEYDOWN and isPlaying == False:
+                    isPlaying = True
+
+               elif event.type == pygame.KEYDOWN and isPlaying == True:
+                    isPlaying = False
+
+               if isPlaying == True:
+                    event.type == next_sequence_event
                     print(sequenceCounter)
                     if sequenceCounter == 1:
-                         # for i in range(16):
-                         #      if buttons[btnindex].color == "#ffffff":
-                         #           pygame.mixer.Channel(i).play(pygame.mixer.Sound(kick))
-                         #           btnindex+=16
                          if buttons[0].color == '#ffffff':
                               pygame.mixer.Channel(0).play(pygame.mixer.Sound(kick))
                          if buttons[16].color == '#ffffff':
@@ -791,31 +679,6 @@ def main():
 
                          
                     sequenceCounter+=1
-
-
-
-
-               # #mouse click on button:
-               # if event.type == pygame.MOUSEBUTTONDOWN:
-               #      # pos = pygame.mouse.get_pos()
-                         
-               #      if kick1.collidepoint(pygame.mouse.get_pos()) and kick1 == WIN.blit(BUTTON, (277, 24)) and kick1_on == True:
-               #           kick1_on = False
-               #           kick1 = WIN.blit(HITBOX, (277, 24))
-               #           print('kick1 clicked and kick1 true > false')
-                    
-               #      if kick1.collidepoint(pygame.mouse.get_pos()) and kick1 == WIN.blit(HITBOX, (277, 24)):
-               #           kick1_on = True
-               #           kick1 = WIN.blit(BUTTON, (277, 24)) 
-               #           print('kick1 clicked and kick1 false > true')
-                         
-                    
-
-               #to quit game:
-              
-
-          # for object in objects:
-          #      object.process()
 
 
 
