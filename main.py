@@ -28,7 +28,19 @@ HITBOX = pygame.image.load(os.path.join('assets', "hitbox.png"))
 
 # Audio
 kick = 'assets/audio/kick.wav'
+clap = 'assets/audio/clap.wav'
+snare = 'assets/audio/snare.wav'
+c_hat = 'assets/audio/c_hat.wav'
+o_hat = 'assets/audio/o_hat.wav'
+tom = 'assets/audio/tom.wav'
+efx1 = 'assets/audio/efx1.wav'
+efx2 = 'assets/audio/efx2.wav'
 chord1 = 'assets/audio/chord1.wav'
+chord2 = 'assets/audio/chord2.wav'
+chord3 = 'assets/audio/chord3.wav'
+bass1 = 'assets/audio/bass1.wav'
+bass2 = 'assets/audio/bass2.wav'
+bass3 = 'assets/audio/bass3.wav'
 
 # pygame.mixer.Channel(0).play(pygame.mixer.Sound(kick))
 
@@ -103,7 +115,6 @@ class Button():
                else:
                     if self.pressed == True:
                          if self.color == '#EF0096':
-                              sequence1.append(self)
                               self.color = '#ffffff'
                               self.pressed = False
                          else:
@@ -261,6 +272,7 @@ def main():
      clock = pygame.time.Clock()
 
      playButtonIndex = 0
+     sequenceCounter = 0
 
      while run:
                
@@ -272,12 +284,22 @@ def main():
                if event.type == pygame.QUIT:
                     run = False
                elif event.type == next_sequence_event:
+                    if sequenceCounter == 0:
+                         if buttons[0].color == '#ffffff':
+                              pygame.mixer.Channel(0).play(pygame.mixer.Sound(kick))
+                         if buttons[16].color == '#ffffff':
+                              pygame.mixer.Channel(0).play(pygame.mixer.Sound(kick))
+                    if (sequenceCounter > 15):
+                         sequenceCounter = 0
+
+
+
+                    # Play Button Hughlighting Logic
                     if(playButtonIndex == 15):
                          playButtons[playButtonIndex].color = '#FFAFAF'
                          playButtons[14].color = '#1C0020'
 
                          playButtonIndex = 0
-                         break
                     else:
                          if (playButtonIndex == 0):
                               playButtons[playButtonIndex].color = '#FFAFAF'
@@ -288,6 +310,8 @@ def main():
                               playButtons[playButtonIndex-1].color = '#1C0020'
 
                          playButtonIndex+=1
+                         sequenceCounter+=1
+
 
 
 
