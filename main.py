@@ -1,3 +1,5 @@
+import asyncio
+
 from math import fabs
 from tkinter import W
 import pygame
@@ -148,7 +150,7 @@ def draw_window():
 
 
 #THE GAME LOOP:
-def main():
+async def main():
 
      run = True
      clock = pygame.time.Clock()
@@ -679,9 +681,14 @@ def main():
                          
                     sequenceCounter+=1
 
-
+               #pygbag function: keep at 0
+               await asyncio.sleep(0)
 
      pygame.quit()
 
-if __name__ == "__main__":
-     main()
+# if __name__ == "__main__":
+#      main()
+
+#this must be the last line of code, do not add anything from here
+#asyncio.run is non block on pg-wasm
+asyncio.run( main () )

@@ -2,7 +2,7 @@
 
 <h3> Installation Instructions: </h3>
 
-<p> 1) Fork and clone this repository. </br> 2) Follow the instructions <a href="https://cs.hofstra.edu/docs/pages/guides/InstallingPygame.html">here to install PyGame.</a> </br> 3) In your command line/terminal, run <code>python3 main.py</code> to begin. Alternatively, open in VSCode or another IDE program and run it from there.
+<p> 1) Fork and clone this repository. </br> 2) <a href="https://cs.hofstra.edu/docs/pages/guides/InstallingPygame.html">Follow the instructions here to install PyGame.</a> </br> 3) In your command line/terminal, run <code>python3 main.py</code> to begin. Alternatively, open in VSCode or another IDE program and run it from there.
 
 <h3> Description: </h3>
 <p> The Burgundy Sequencer is a music application that allows users to create rhythmic sequences. Users interact with a grid-based system to "code" rhythms for one-shot samples of audio to play in a loop. Players can create drum sequences, musical arpeggios, or other pieces of music.</p>
@@ -12,7 +12,7 @@
 <h3> Tech Stack: </h3>
 <p> Burgundy Sequencer is powered by PyGame, which itself is powered by Python3. </p>
 
-<h3> Wireframe: </h3>
+<h3> Display: </h3>
 <img src="assets/layout.png" alt="wireframe">
 
 <h3> User Stories: </h3>
