@@ -1,10 +1,11 @@
-import asyncio
-
-from math import fabs
-from tkinter import W
-import pygame
+# from tkinter import W
+# from tkinter import *
+# from tkinter import ttk
 import os
+import pygame
+import asyncio
 import math
+from math import fabs
 from pygame import mixer
 
 # from parser import sequence2st
@@ -165,6 +166,10 @@ async def main():
                
 
           clock.tick(FPS)
+
+         #Pygbag compatibility line:
+          await asyncio.sleep(0)
+
           for event in pygame.event.get():
                draw_window()
 
@@ -681,14 +686,7 @@ async def main():
                          
                     sequenceCounter+=1
 
-               #pygbag function: keep at 0
-               await asyncio.sleep(0)
-
      pygame.quit()
 
-# if __name__ == "__main__":
-#      main()
-
-#this must be the last line of code, do not add anything from here
-#asyncio.run is non block on pg-wasm
-asyncio.run( main () )
+#pygbag compatibility line: this must be the final line of code
+asyncio.run( main())
